@@ -1,6 +1,9 @@
 const express = require('express');
 const Categoryroute =express.Router();
-const Category=require('../model/categories')
+const Category=require('../model/categories');
+const bodyParser = require('body-parser');
+
+Categoryroute.use(bodyParser.json())
 
 Categoryroute.get('/',async(req,res)=>{
     const data = await Category.find();
@@ -20,8 +23,8 @@ Categoryroute.get('/:id',async(req,res)=>{
  
 Categoryroute.post('/add', async (req, res) => {
     try {
+        console.log("name = ",req.body);
         const { name, description, images } = req.body;
-
         if (!name) {
             return res.status(400).json({ error: "Name is required!" });
         }
